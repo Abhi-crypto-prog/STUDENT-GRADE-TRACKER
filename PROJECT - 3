@@ -1,0 +1,51 @@
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.grades = {}
+
+    def add_grade(self, subject, grade):
+        if subject in self.grades:
+            self.grades[subject].append(grade)
+        else:
+            self.grades[subject] = [grade]
+
+    def calculate_average(self):
+        total = 0
+        count = 0
+        for grades in self.grades.values():
+            total += sum(grades)
+            count += len(grades)
+        return total / count if count != 0 else 0
+
+    def calculate_gpa(self):
+        average = self.calculate_average()
+        if average >= 90:
+            return 4.0, 'A'
+        elif average >= 80:
+            return 3.0, 'B'
+        elif average >= 70:
+            return 2.0, 'C'
+        elif average >= 60:
+            return 1.0, 'D'
+        else:
+            return 0.0, 'F'
+
+    def display_grades(self):
+        print(f"Grades for {self.name}:")
+        for subject, grades in self.grades.items():
+            print(f"{subject}: {grades}")
+        average = self.calculate_average()
+        gpa, letter_grade = self.calculate_gpa()
+        print(f"Average Grade: {average:.2f}")
+        print(f"GPA: {gpa:.2f} ({letter_grade})")
+
+
+# Example Usage
+student = Student("abhishek chatterjee")
+student.add_grade("Math", 85)
+student.add_grade("English", 92)
+student.add_grade("Science", 78)
+student.add_grade("Math", 90)
+student.add_grade("History", 88)
+
+student.display_grades()
